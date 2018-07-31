@@ -35,3 +35,7 @@ yet, i get it to compile with
 import qualified Data.ByteString.Lazy.Char8 as BS
 getIdentityToken :: IO (Response BS.ByteString)
 ```
+
+### q2
+what does `{-# LANGUAGE OverloadedStrings #-}` do?
+

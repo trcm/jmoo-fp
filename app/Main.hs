@@ -5,7 +5,7 @@ where
 --
 import           Types
 
-import           Data.Aeson
+import           Data.Aeson                     ( decode )
 import           Network.Wreq
 import           Control.Lens
 import           Data.Monoid                    ( (<>) )
@@ -23,12 +23,11 @@ jBody =
   , "scope" := ("openid" :: String)
   ]
 
-constructUrl :: URL
-constructUrl =
+keycloakURL :: URL
+keycloakURL =
   "http://localhost:8087/auth/realms/master/protocol/openid-connect/token"
 
-getIdentityToken :: IO (Maybe KeyCloakTokens)
-getIdentityToken = do
-  res <- postWith jheader constructUrl jBody 
-  print res
-  return Nothing
+postIdentityToken :: IO (Maybe KeycloakToken)
+postIdentityToken = do
+  res <- postWith jheader keycloakURL jBody
+  return $ decode (res ^. responseBody)
